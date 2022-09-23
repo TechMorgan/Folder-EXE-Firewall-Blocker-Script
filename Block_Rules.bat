@@ -24,6 +24,7 @@ echo.
 echo  [3] Exit
 echo.
 set /p opt=%BS% Choose option: 
+if not defined opt cls & goto Dirc0
 if %opt%==1 cd /d "%~dp0" & goto Dirc3
 if %opt%==2 goto Dirc
 if %opt%==3 exit /b
@@ -59,7 +60,7 @@ goto Sub1
 echo.
 for %%i in (.) do set name1=%%~nxi
 set /p name2=%BS% Enter rulename or press enter to name it as "%name1% _exe_file_path_": 
-if not defined name2 set name2=%name1% %%~nxa
+if not defined name2 set name2=%name1% %cr%%%a
 
 echo.
 set /p way=%BS% Confirm ( i - Inbound / o - Outbound / b - Both ): 
@@ -99,9 +100,6 @@ call :Rule
 echo.
 echo  COMPLETED....!!
 echo.
-set /p choice="Do you want to restart? (y/n): "
-if /i not '%choice%'=='' set choice=%choice:~0,1%
-if /i '%choice%'=='y' set name2=& set cr=& set word=& echo. & echo. & goto Start
 echo  Press any key to exit
 pause >nul
 exit /b
